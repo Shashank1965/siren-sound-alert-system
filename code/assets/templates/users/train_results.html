@@ -1,0 +1,105 @@
+{% extends 'users/userbase.html' %}
+{% block content %}
+
+<style>
+    .results-wrapper {
+        padding: 40px 20px 60px;
+        background: linear-gradient(135deg, #f0f4ff 0%, #e8f5ff 100%);
+        min-height: 80vh;
+    }
+    .results-header {
+        text-align: center;
+        margin-bottom: 36px;
+    }
+    .results-header h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #1a1a2e;
+    }
+    .results-header p {
+        color: #6c757d;
+        font-size: 0.95rem;
+    }
+    .accuracy-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: #fff;
+        font-size: 1.6rem;
+        font-weight: 800;
+        padding: 16px 40px;
+        border-radius: 50px;
+        margin-bottom: 36px;
+        box-shadow: 0 4px 15px rgba(40,167,69,0.3);
+    }
+    .plot-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 24px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    .plot-card h2 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 16px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #00d4ff;
+    }
+    .plot-card img {
+        max-width: 100%;
+        border-radius: 8px;
+    }
+    .model-path-card {
+        background: #1a1a2e;
+        color: #00d4ff;
+        border-radius: 12px;
+        padding: 16px 24px;
+        font-family: monospace;
+        font-size: 0.9rem;
+        word-break: break-all;
+        margin-top: 10px;
+    }
+</style>
+
+<div class="results-wrapper">
+    <div class="container">
+        <div class="results-header">
+            <h1>🧠 Model Training Results</h1>
+            <p>Training completed successfully. Review accuracy and loss metrics below.</p>
+        </div>
+
+        <div class="text-center">
+            <div class="accuracy-badge">
+                🎯 Test Accuracy: {{ accuracy }}%
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="plot-card">
+                    <h2>📉 Loss Curve</h2>
+                    <img src="{{ loss_plot }}" alt="Loss Plot">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="plot-card">
+                    <h2>📈 Accuracy Curve</h2>
+                    <img src="{{ acc_plot }}" alt="Accuracy Plot">
+                </div>
+            </div>
+        </div>
+
+        <div class="plot-card">
+            <h2>🔲 Confusion Matrix</h2>
+            <img src="{{ cm_plot }}" alt="Confusion Matrix">
+        </div>
+
+        <div class="plot-card">
+            <h2>💾 Model Saved At</h2>
+            <div class="model-path-card">{{ model_path }}</div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

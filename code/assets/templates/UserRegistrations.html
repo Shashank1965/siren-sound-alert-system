@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block contents %}
+<style>
+    .register-section {
+        min-height: calc(100vh - 160px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 24px;
+        background: #f8fafc;
+    }
+    .register-card {
+        background: white;
+        padding: 48px;
+        width: 100%;
+        max-width: 800px;
+        border-radius: 24px;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        border: 1px solid #e2e8f0;
+    }
+    .register-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    .register-header h2 {
+        font-size: 2.25rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 12px;
+    }
+    .register-header p {
+        color: #64748b;
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .form-group-full {
+        grid-column: span 2;
+    }
+    .form-label {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #334155;
+    }
+    .form-control-custom {
+        width: 100%;
+        padding: 12px 16px;
+        background: #f8fafc;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.2s;
+        color: #0f172a;
+    }
+    .form-control-custom:focus {
+        background: white;
+        border-color: #10b981;
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+    }
+    textarea.form-control-custom {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    .register-footer {
+        grid-column: span 2;
+        margin-top: 16px;
+    }
+    .btn-register {
+        width: 100%;
+        padding: 16px;
+        background: #10b981;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.125rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .btn-register:hover {
+        background: #059669;
+        transform: translateY(-1px);
+        box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
+    }
+
+    @media (max-width: 640px) {
+        .form-grid { grid-template-columns: 1fr; }
+        .form-group-full { grid-column: span 1; }
+        .register-footer { grid-column: span 1; }
+    }
+</style>
+
+<div class="register-section">
+    <div class="register-card">
+        <div class="register-header">
+            <h2>Create Account</h2>
+            <p>Join the siren detection network. Your account will be activated by the admin.</p>
+        </div>
+
+        <form action="{% url 'UserRegisterActions' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-grid">
+                <!-- Name -->
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.name.id_for_label }}">Full Name</label>
+                    {{ form.name }}
+                </div>
+                <!-- Login ID -->
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.loginid.id_for_label }}">Login ID</label>
+                    {{ form.loginid }}
+                </div>
+                <!-- Email -->
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.email.id_for_label }}">Email Address</label>
+                    {{ form.email }}
+                </div>
+                <!-- Mobile -->
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.mobile.id_for_label }}">Mobile Number</label>
+                    {{ form.mobile }}
+                </div>
+                <!-- Password -->
+                <div class="form-group-full">
+                    <label class="form-label" for="{{ form.password.id_for_label }}">Password</label>
+                    {{ form.password }}
+                </div>
+                <!-- Locality -->
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.locality.id_for_label }}">Locality</label>
+                    {{ form.locality }}
+                </div>
+                <!-- City -->
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.city.id_for_label }}">City</label>
+                    {{ form.city }}
+                </div>
+                <!-- State -->
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.state.id_for_label }}">State</label>
+                    {{ form.state }}
+                </div>
+                <!-- Hidden Status -->
+                {{ form.status }}
+                <!-- Address -->
+                <div class="form-group-full">
+                    <label class="form-label" for="{{ form.address.id_for_label }}">Full Address</label>
+                    {{ form.address }}
+                </div>
+
+                <div class="register-footer">
+                    <button type="submit" class="btn-register">Register Account</button>
+                    <div style="text-align: center; margin-top: 16px;">
+                        Already have an account? <a href="{% url 'UserLogin' %}" style="color: #10b981; font-weight: 600; text-decoration: none;">Login here</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Enhance Django form inputs with the modern class
+    document.querySelectorAll('input, textarea').forEach(el => {
+        el.classList.add('form-control-custom');
+    });
+</script>
+{% endblock %}

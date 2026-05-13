@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Siren Detection</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f1f5f9; margin: 0; padding-top: 68px; }
+
+        /* ── NAVBAR ── */
+        .admin-navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: #0f172a;
+            height: 68px; display: flex; align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .admin-navbar .nav-inner {
+            max-width: 1400px; margin: 0 auto; padding: 0 24px;
+            width: 100%; display: flex; align-items: center; justify-content: space-between;
+        }
+        .nav-brand {
+            display: flex; align-items: center; gap: 10px;
+            text-decoration: none; font-weight: 800; font-size: 1.2rem;
+        }
+        .nav-brand .brand-icon {
+            width: 36px; height: 36px; background: white;
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+        }
+        .nav-brand .brand-icon svg { width: 20px; height: 20px; stroke: #0f172a; fill: none; stroke-width: 2.5; }
+        .nav-brand .brand-text { color: #f8fafc; }
+        .nav-brand .brand-admin { color: #10b981; }
+
+        .nav-links { display: flex; align-items: center; gap: 4px; }
+        .nav-link-item {
+            text-decoration: none; padding: 8px 16px; border-radius: 8px;
+            font-size: 0.9rem; font-weight: 600; color: #94a3b8;
+            transition: all 0.2s ease;
+        }
+        .nav-link-item:hover { color: #f8fafc; background: #1e293b; }
+        .nav-link-item.active { background: #1e293b; color: #fff !important; }
+        
+        .nav-logout {
+            text-decoration: none; padding: 7px 18px; border-radius: 8px;
+            font-size: 0.9rem; font-weight: 700; color: #f8fafc;
+            background: #ef4444; margin-left: 12px;
+            transition: all 0.2s ease;
+        }
+        .nav-logout:hover { background: #dc2626; transform: translateY(-1px); }
+
+        /* ── FOOTER ── */
+        footer {
+            background: #0f172a; color: white; padding: 30px 0; margin-top: 60px;
+        }
+        .footer-content {
+            max-width: 1400px; margin: 0 auto; padding: 0 24px;
+            display: flex; justify-content: space-between; align-items: center; opacity: 0.6; font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="admin-navbar">
+    <div class="nav-inner">
+        <a class="nav-brand" href="{% url 'AdminHome' %}">
+            <div class="brand-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            <span class="brand-text">Admin <span class="brand-admin">Portal</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="{% url 'AdminHome' %}" class="nav-link-item active">Dashboard</a>
+            <a href="{% url 'RegisterUsersView' %}" class="nav-link-item">User Management</a>
+            <a href="{% url 'gen_image_view' %}" class="nav-link-item">Training Results</a>
+            <a href="{% url 'index' %}" class="nav-logout">Logout</a>
+        </div>
+    </div>
+</nav>
+
+{% block contents %}{% endblock %}
+
+<footer>
+    <div class="footer-content">
+        <div>Siren Detection Admin Panel</div>
+        <div>&copy; 2026 Emergency Vehicle Classification System</div>
+    </div>
+</footer>
+
+<script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

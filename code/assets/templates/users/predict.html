@@ -1,0 +1,119 @@
+{% extends 'users/userbase.html' %}
+{% block content %}
+
+<style>
+    .predict-wrapper {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+        background: linear-gradient(135deg, #f0f4ff 0%, #e8f5ff 100%);
+    }
+    .predict-card {
+        background: #fff;
+        padding: 40px 50px;
+        max-width: 540px;
+        width: 100%;
+        border-radius: 16px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        text-align: center;
+    }
+    .predict-card h1 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 8px;
+    }
+    .predict-card p.subtitle {
+        color: #6c757d;
+        margin-bottom: 30px;
+        font-size: 0.95rem;
+    }
+    .file-input-wrapper {
+        border: 2px dashed #00d4ff;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        background: #f8fbff;
+        cursor: pointer;
+    }
+    .file-input-wrapper input[type="file"] {
+        width: 100%;
+        cursor: pointer;
+        font-size: 0.95rem;
+        color: #555;
+    }
+    .btn-predict {
+        background: linear-gradient(135deg, #1a1a2e, #00d4ff);
+        color: #fff;
+        border: none;
+        padding: 12px 40px;
+        border-radius: 30px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-predict:hover {
+        opacity: 0.9;
+        transform: scale(1.03);
+    }
+    .result-box {
+        margin-top: 28px;
+        padding: 18px 24px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #e6fff3, #d4f5e9);
+        border-left: 5px solid #28a745;
+        text-align: left;
+    }
+    .result-box .label {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #28a745;
+        font-weight: 700;
+        margin-bottom: 4px;
+    }
+    .result-box .value {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #1a1a2e;
+        margin-bottom: 15px;
+    }
+    .samples-section, .sample-item, .sample-label {
+        display: none;
+    }
+</style>
+
+<div class="predict-wrapper">
+    <div class="predict-card">
+        <h1>🎵 Predict Audio</h1>
+        <p class="subtitle">Upload a <strong>.wav</strong> audio file to classify the siren sound</p>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="file-input-wrapper">
+                <input type="file" name="audio_file" accept=".wav" required>
+            </div>
+            <button type="submit" class="btn-predict">🔍 Run Prediction</button>
+        </form>
+
+        {% if prediction %}
+        <div class="result-box">
+            <div class="label">Prediction Result</div>
+            <div class="value">✅ {{ prediction }}</div>
+            
+            {% if audio_url %}
+            <div class="label">Playing Your Uploaded Audio:</div>
+            <audio controls autoplay class="audio-player">
+                <source src="{{ audio_url }}" type="audio/wav">
+                Your browser does not support the audio element.
+            </audio>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
